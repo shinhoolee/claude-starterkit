@@ -14,7 +14,67 @@
       "Bash(git remote add:*)",
       "Bash(git push:*)",
       "Skill(git:commit)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(mkdir:*)",
+      "Bash(.venv/Scripts/alembic.exe revision:*)",
+      "Bash(poetry run alembic revision:*)",
+      "Bash(python -m alembic:*)",
+      "Bash(cat:*)",
+      "Bash(.venv/Scripts/python.exe:*)",
+      "Bash(poetry run python:*)",
+      "Bash(python -c:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(python:*)",
+      "Bash(black:*)",
+      "Bash(ruff:*)",
+      "Bash(export CLAUDE_PROJECT_DIR=\"C:/Users/vuno/workspace/claude-starterkit\")"
+    ]
+  },
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\slack_notify.py\"",
+            "timeout": 5000
+          },
+          {
+            "type": "command",
+            "command": "python \"%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\code_quality.py\"",
+            "timeout": 30000
+          },
+          {
+            "type": "command",
+            "command": "python \"%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\env_validator.py\"",
+            "timeout": 10000
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"%CLAUDE_PROJECT_DIR%\\.claude\\hooks\\slack_notify.py\"",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read file_path; if echo \"$file_path\" | grep -q '\\\\.ts$'; then npx prettier --write \"$file_path\"; fi; }"
+          }
+        ]
+      }
     ]
   }
 }
