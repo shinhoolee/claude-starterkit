@@ -27,7 +27,10 @@
       "Bash(python:*)",
       "Bash(black:*)",
       "Bash(ruff:*)",
-      "Bash(export CLAUDE_PROJECT_DIR=\"C:/Users/vuno/workspace/claude-starterkit\")"
+      "Bash(export CLAUDE_PROJECT_DIR=\"C:/Users/vuno/workspace/claude-starterkit\")",
+      "Bash(npx --version)",
+      "Bash(node --version)",
+      "Bash(npx -y @modelcontextprotocol/server-sequential-thinking --version)"
     ]
   },
   "hooks": {
